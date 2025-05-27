@@ -1,6 +1,7 @@
 # JSON Repair Java
 
 这是一个用 Java 实现的 JSON 修复工具，可以修复损坏或格式不正确的 JSON 字符串。
+99%的代码由claude3.5编写。
 
 ## 功能特点
 

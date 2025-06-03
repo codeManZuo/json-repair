@@ -209,7 +209,6 @@ public class JsonParser {
 
     private Object parseString() {
         boolean missingQuotes = false;
-        boolean doubledQuotes = false;
         char lStringDelimiter = '"';
         char rStringDelimiter = '"';
 
@@ -247,55 +246,38 @@ public class JsonParser {
         }
 
         StringBuilder stringAcc = new StringBuilder();
-        boolean unmatchedDelimiter = false;
-        boolean inValue = context.getCurrent() == JsonContext.ContextValue.OBJECT_VALUE;
-        int quoteCount = 0;
-        boolean hasStartedValue = false;
+        boolean escaped = false;
 
-        while ((ch = getCharAt()) != null) {
-            if (inValue) {
-                if (ch == '"') {
-                    quoteCount++;
-                    if (quoteCount == 1) {
-                        hasStartedValue = true;
-                    }
-                    else if (hasStartedValue && quoteCount % 2 == 0) {
-                        Character nextCh = getCharAt(1);
-                        if (nextCh == null || nextCh == ',' || nextCh == '}') {
-                            stringAcc.append(ch);
-                            index++;
-                            break;
-                        }
-                    }
-                }
+        while (true) {
+            ch = getCharAt();
+            if (ch == null) {
+                break;
+            }
 
-                if (!hasStartedValue && !Character.isWhitespace(ch)) {
-                    hasStartedValue = true;
-                }
-
-                stringAcc.append(ch);
+            if (escaped) {
+                if (ch == 'n') stringAcc.append('\n');
+                else if (ch == 'r') stringAcc.append('\r');
+                else if (ch == 't') stringAcc.append('\t');
+                else if (ch == 'b') stringAcc.append('\b');
+                else if (ch == 'f') stringAcc.append('\f');
+                else stringAcc.append(ch);
+                escaped = false;
                 index++;
                 continue;
             }
 
-            if (context.getCurrent() == JsonContext.ContextValue.OBJECT_KEY &&
-                (ch == ':' || Character.isWhitespace(ch))) {
-                break;
-            }
-
-            if (ch == '\\' && getCharAt() != null) {
-                char nextCh = getCharAt();
-                if (nextCh == rStringDelimiter || nextCh == 't' || nextCh == 'n' ||
-                    nextCh == 'r' || nextCh == 'b' || nextCh == '\\') {
-                    stringAcc.append(ch).append(nextCh);
-                    index += 2;
-                    continue;
-                }
+            if (ch == '\\') {
+                escaped = true;
+                index++;
+                continue;
             }
 
             if (!missingQuotes && ch == rStringDelimiter) {
-                stringAcc.append(ch);
                 index++;
+                break;
+            }
+
+            if (missingQuotes && (ch == ',' || ch == '}' || ch == ']' || Character.isWhitespace(ch))) {
                 break;
             }
 
@@ -303,12 +285,7 @@ public class JsonParser {
             index++;
         }
 
-        String result = stringAcc.toString();
-        if (!streamStable && (missingQuotes || result.endsWith("\n"))) {
-            result = result.trim();
-        }
-
-        return result;
+        return stringAcc.toString();
     }
 
     private Object parseNumber() {

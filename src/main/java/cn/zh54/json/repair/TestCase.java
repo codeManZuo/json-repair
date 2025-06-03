@@ -2,7 +2,7 @@ package cn.zh54.json.repair;
 
 public class TestCase {
 
-    public void doTest(String[] args) {
+    public static void doTest(String[] args) {
         testCase("{'key': 'string', 'key2': false, \"key3\": null, \"key4\": unquoted}");
         testCase("[1, 2, 3, 4");
         testCase("欢迎访问我的博客54zh.cn,b站账号:猿大晖[]");
@@ -20,6 +20,8 @@ public class TestCase {
         testCase("{ \"content\": \"[LINK](\"https://google.com\")\" }");
         testCase("{ \"content\": \"[LINK](\", \"key\": true }");
         testCase("{\"key\":\"\",}");
+        testCase("[{'transactionDate': '2025-05-31 10:36:55','fromAccount': null,'toAccount': null,'debit': null,'credit': 277300,'balance': 822300,'description': '2025 May 31 10:36:55 31 May 2025 Transfer from CREDPAY FINTECH LIMITED +2,773.00 8,223.00 E-Channel 100033250531103654318487604138','transactionType': 'OTHER'},{'transactionDate': '2025-06-01 18:54:45','fromAccount': null,'toAccount': null,'debit': 65000,'credit': null,'balance': 4850400,'description': '2025 Jun 01");
+        testCase("[{\"transactionDate\": \"2025-05-31 10:36:55\",\"fromAccount\": null,\"toAccount\": null,\"debit\": null,\"credit\": 277300,\"balance\": 822300,\"description\": \"2025 May 31 10:36:55 31 May 2025 Transfer from CREDPAY FINTECH LIMITED +2,773.00 8,223.00 E-Channel 100033250531103654318487604138\",\"transactionType\": \"OTHER\"},{\"transactionDate\": \"2025-06-01 18:54:45\",\"fromAccount\": null,\"toAccount\": null,\"debit\": 65000,\"credit\": null,\"balance\": 4850400,\"description\": \"2025 Jun 01");
     }
 
     private static void testCase(String badJson) {

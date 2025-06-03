@@ -1,6 +1,10 @@
+![image](https://github.com/user-attachments/assets/41970a72-c3a3-4882-b1e2-c9df38d26b9d)
+
+
 # JSON Repair Java
 
 这是一个用 Java 实现的 JSON 修复工具，可以修复损坏或格式不正确的 JSON 字符串。
+
 99%的代码由claude3.5编写。
 
 ## 功能特点
@@ -18,13 +22,13 @@ maven
 <dependency>
     <groupId>cn.54zh</groupId>
     <artifactId>json-repair</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 gradle
 ```
-implementation 'cn.54zh:json-repair:1.0.0'
+implementation 'cn.54zh:json-repair:1.0.1'
 ```
 
 ```java
@@ -97,4 +101,5 @@ good_json: {"key\"":"\",}"}
 ## 作者
 
 个人博客: http://54zh.cn
+
 b站: 猿大晖

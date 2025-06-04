@@ -22,13 +22,13 @@ maven
 <dependency>
     <groupId>cn.54zh</groupId>
     <artifactId>json-repair</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
 gradle
 ```
-implementation 'cn.54zh:json-repair:1.0.1'
+implementation 'cn.54zh:json-repair:1.0.2'
 ```
 
 ```java

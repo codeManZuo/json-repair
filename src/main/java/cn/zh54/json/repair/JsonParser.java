@@ -121,7 +121,7 @@ public class JsonParser {
                 if (key.isEmpty()) {
                     skipWhitespacesAt();
                 }
-                if (!key.isEmpty() || (key.isEmpty() && (getCharAt() == ':' || getCharAt() == '}'))) {
+                if (!key.isEmpty() || (key.isEmpty() && (getCharAt() != null && (getCharAt() == ':' || getCharAt() == '}')))) {
                     break;
                 }
             }
